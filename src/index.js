@@ -17,6 +17,13 @@ const DetectDeveloperMode = NativeModules.DetectDeveloperMode
       }
     );
 
-export function multiply(a: number, b: number): Promise<number> {
+export function multiply(a, b) {
   return DetectDeveloperMode.multiply(a, b);
+}
+
+export function isDeveloperModeEnabled() {
+  if (!DetectDeveloperMode || !DetectDeveloperMode.isDeveloperModeEnabled) {
+    throw new Error(LINKING_ERROR);
+  }
+  return DetectDeveloperMode.isDeveloperModeEnabled();
 }

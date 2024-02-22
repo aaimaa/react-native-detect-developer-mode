@@ -1,17 +1,23 @@
 package com.detectdevelopermode
 
-import com.facebook.react.ReactPackage
-import com.facebook.react.bridge.NativeModule
+import android.provider.Settings
 import com.facebook.react.bridge.ReactApplicationContext
-import com.facebook.react.uimanager.ViewManager
+import com.facebook.react.bridge.ReactContextBaseJavaModule
+import com.facebook.react.bridge.ReactMethod
 
+class DetectDeveloperModeModule(reactContext: ReactApplicationContext) : ReactContextBaseJavaModule(reactContext) {
 
-class DetectDeveloperModePackage : ReactPackage {
-  override fun createNativeModules(reactContext: ReactApplicationContext): List<NativeModule> {
-    return listOf(DetectDeveloperModeModule(reactContext))
-  }
+    override fun getName(): String {
+        return "DetectDeveloperModeModule"
+    }
 
-  override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
-    return emptyList()
-  }
+    @ReactMethod
+    fun isDeveloperModeEnabled(): Boolean {
+        val developmentSettingsEnabled = Settings.Global.getInt(
+            reactApplicationContext.contentResolver,
+            Settings.Global.DEVELOPMENT_SETTINGS_ENABLED,
+            0
+        )
+        return developmentSettingsEnabled != 0
+    }
 }
