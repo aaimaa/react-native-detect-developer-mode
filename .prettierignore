@@ -1,0 +1,10 @@
+## Ignore artifacts:
+.expo
+dist
+build
+coverage
+node_modules
+ios
+android
+.vscode
+package.json

@@ -1,10 +1,10 @@
-import { NativeModules, Platform } from 'react-native';
+import { NativeModules, Platform } from "react-native";
 
 const LINKING_ERROR =
   `The package 'react-native-detect-developer-mode' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: '' }) +
-  '- You rebuilt the app after installing the package\n' +
-  '- You are not using Expo Go\n';
+  Platform.select({ ios: "- You have run 'pod install'\n", default: "" }) +
+  "- You rebuilt the app after installing the package\n" +
+  "- You are not using Expo Go\n";
 
 const DetectDeveloperMode = NativeModules.DetectDeveloperMode
   ? NativeModules.DetectDeveloperMode
@@ -13,13 +13,9 @@ const DetectDeveloperMode = NativeModules.DetectDeveloperMode
       {
         get() {
           throw new Error(LINKING_ERROR);
-        },
+        }
       }
     );
-
-export function multiply(a, b) {
-  return DetectDeveloperMode.multiply(a, b);
-}
 
 export function isDeveloperModeEnabled() {
   if (!DetectDeveloperMode || !DetectDeveloperMode.isDeveloperModeEnabled) {
