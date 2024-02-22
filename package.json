@@ -46,7 +46,7 @@
   },
   "homepage": "https://github.com/aaimaa/react-native-detect-developer-mode#readme",
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+    "registry": "https://registry.npmjs.org/aaimaa"
   },
   "devDependencies": {
     "@commitlint/config-conventional": "^17.0.2",
@@ -91,9 +91,6 @@
     },
     "npm": {
       "publish": true
-    },
-    "github": {
-      "release": true
     },
     "plugins": {
       "@release-it/conventional-changelog": {
