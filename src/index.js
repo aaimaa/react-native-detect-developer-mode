@@ -6,19 +6,14 @@ const LINKING_ERROR =
   "- You rebuilt the app after installing the package\n" +
   "- You are not using Expo Go\n";
 
-const DetectDeveloperMode = NativeModules.DetectDeveloperMode
-  ? NativeModules.DetectDeveloperMode
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        }
-      }
-    );
+const DetectDeveloperMode = NativeModules.DetectDeveloperMode;
+
+if (!DetectDeveloperMode) {
+  throw new Error(LINKING_ERROR);
+}
 
 export function isDeveloperModeEnabled() {
-  if (!DetectDeveloperMode || !DetectDeveloperMode.isDeveloperModeEnabled) {
+  if (!DetectDeveloperMode.isDeveloperModeEnabled) {
     throw new Error(LINKING_ERROR);
   }
   return DetectDeveloperMode.isDeveloperModeEnabled();
