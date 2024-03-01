@@ -1,20 +1,13 @@
 import { NativeModules, Platform } from "react-native";
 
-const LINKING_ERROR =
-  `The package 'react-native-detect-developer-mode' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: "" }) +
-  "- You rebuilt the app after installing the package\n" +
-  "- You are not using Expo Go\n";
+const { DetectDeveloperMode } = NativeModules;
 
-const DetectDeveloperMode = NativeModules.DetectDeveloperMode;
+if (DetectDeveloperMode == null) console.warn("DetectDeveloperMode is not available, check your native dependencies have linked correctly and ensure your app has been rebuilt");
 
-if (!DetectDeveloperMode) {
-  throw new Error(LINKING_ERROR);
-}
-
-export function isDeveloperModeEnabled() {
-  if (!DetectDeveloperMode.isDeveloperModeEnabled) {
-    throw new Error(LINKING_ERROR);
+export default {
+  isDevelopmentSettingsMode: () => {
+    // API only available on Android, return false for all other platforms.
+    if (Platform.OS !== "android") return Promise.resolve(false);
+    return DetectDeveloperMode.isDevelopmentSettingsMode();
   }
-  return DetectDeveloperMode.isDeveloperModeEnabled();
-}
+};
